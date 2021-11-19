@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+class CoffeeMachineInterface {
+    public:
+        void firstSelection(){
+            cout<<"Selected first flavour in the interface "<<endl;
+        }
+        void secondSelection(){
+            cout<<"Selected second flavour in the interface "<<endl;
+        }
+};
+
+class OldCoffeeMachine {
+    public:
+        void firstSelection(){
+            cout<<"Selected first flavour in the old machine"<<endl;
+        }
+        void secondSelection(){
+            cout<<"Selected second flavour in the old machine"<<endl;
+        }
+};
+
+class CoffeeTouchscreenAdapter : public CoffeeMachineInterface {
+    private:
+        OldCoffeeMachine* OldVendingMachine;
+    public:
+        CoffeeTouchscreenAdapter(OldCoffeeMachine* OldVendingMachine){
+            OldVendingMachine = OldVendingMachine;
+        }
+        void firstSelection(){
+            OldVendingMachine -> firstSelection();
+        }
+        void secondSelection(){
+            OldVendingMachine -> secondSelection();
+        }
+};
+
+int main() {
+    CoffeeMachineInterface* newMachine = new CoffeeMachineInterface;
+    OldCoffeeMachine* oldMachine = new OldCoffeeMachine;
+    CoffeeTouchscreenAdapter* adapter = new CoffeeTouchscreenAdapter(oldMachine);
+    newMachine -> firstSelection();
+    adapter -> firstSelection();
+    newMachine -> secondSelection();
+    adapter -> secondSelection();
+
+    return 0;
+}
